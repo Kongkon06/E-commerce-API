@@ -1,12 +1,26 @@
+const { PrismaClient } = require('@prisma/client/extension');
 const express = require('express');
 const User = express.Router();
 
-User.post('/',(req,res)=>{
+const prisma = new PrismaClient;
+User.post('/',async (req,res)=>{
     try{
-        const user = req.body;
+        const data = req.body;
+        const user = await prisma.user.create({
+            data:{
+                name:req.body.name,
+                email:req.body.email,
+                password:req.body.password
+            }
+        })
+        if(!user){
+            res.status(500)
+        }
         res.json();
     }catch(e){
-        res.json()
+        res.status(411).json({
+            msg:"Invalid credentials"
+        })
     }
 });
 
