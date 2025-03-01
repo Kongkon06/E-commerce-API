@@ -19,6 +19,8 @@ model User{
   email String @unique
   phone String @unique
   password String
+  orders Int
+  order  Product @relation(fields: [orders],references: [id])
 }
 
 model Admin{
@@ -26,4 +28,12 @@ model Admin{
   name String
   email String @unique
   password String 
+}
+
+model Product{
+  id Int @id @default(autoincrement())
+  name String
+  provider String
+  price String
+  customer User[]
 }
