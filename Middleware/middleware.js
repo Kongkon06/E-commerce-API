@@ -19,3 +19,4 @@ const middleware = (req,res,next) => {
         res.status(500).json();
     }
 }
+module.exports = middleware;
