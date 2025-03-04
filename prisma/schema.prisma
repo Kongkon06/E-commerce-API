@@ -11,7 +11,7 @@ model Products{
   id Int @id @default(autoincrement()) 
   product_name String
   price String
-
+  stocks Int
 }
 model User{
   id  Int @id @default(autoincrement()) 
@@ -19,8 +19,7 @@ model User{
   email String @unique
   phone String @unique
   password String
-  orders Int
-  order  Product @relation(fields: [orders],references: [id])
+  orders Product[]
 }
 
 model Admin{
@@ -36,4 +35,12 @@ model Product{
   provider String
   price String
   customer User[]
+  categoryId Int       // Foreign key
+  category   Categories @relation(fields: [categoryId], references: [id])
 }
+
+model Categories{
+    id Int @id  @default(autoincrement())
+    catergory_name String 
+    products Product[]
+  }

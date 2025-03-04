@@ -54,14 +54,33 @@ Product.update('/',async(req,res)=>{
         const product = await prisma.product.update({
             where:{
                 name:data.name,
-                price:data.price
+                price:data.price,
+                stock:data.price,
             }
         })
     }catch(e){
-
+        res.status(411).json({
+            msg:"Invalide Credentials"
+        })
     }
 });
 
-Product.delete('/',(req,res)=>{});
+Product.delete('/',async(req,res)=>{
+    try{
+    const prouduct_id=req.body;
+    const pr= await prisma.products.delete({
+        where:{
+            id:prouduct_id
+        }
+    });
+        res.json({
+            msg:"Product deleted sucessfully"
+        })
+    }catch(e){
+        res.json({
+            msg:"error while deleting product"
+        })
+    }
+});
 
 module.exports = Product

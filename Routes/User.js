@@ -1,6 +1,7 @@
 const { PrismaClient } = require('@prisma/client/extension');
 const express = require('express');
 const User = express.Router();
+const Product = require('./Product.js');
 
 const prisma = new PrismaClient;
 User.post('/',async (req,res)=>{
@@ -24,9 +25,23 @@ User.post('/',async (req,res)=>{
     }
 });
 
-User.post('/',(req,res)=>{});
+User.use('/products',Product);
 
-User.post('/',(req,res)=>{});
+User.post('/orders',async (req,res)=>{
+    try{
+    const data = req.data;
+    const orders = await prisma.user.findFirst({
+        where:{
+            name:data.name
+        }
+    })
+        res.json({
+            orders:orders
+        })
+    }catch(e){
+        res.status(411).json('Error while fetching orders');
+    }
+});
 
 User.post('/',(req,res)=>{});
 

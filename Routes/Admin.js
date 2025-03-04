@@ -4,6 +4,7 @@ const Admin = express.Router();
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const prisma = new PrismaClient;
+const Products = require('./Product.js');
 
 dotenv.config();
 Admin.post('/signin',async(req,res)=>{
@@ -55,8 +56,6 @@ Admin.post('/login',async(req,res)=>{
     }
     }
 )
-Admin.post('/',(req,res)=>{});
-
-Admin.post('/',(req,res)=>{});
+Admin.use('/Products',Products);
 
 module.exports = Admin
